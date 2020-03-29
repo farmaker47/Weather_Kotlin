@@ -77,7 +77,7 @@
     <string name="noLocationFound">No location found. Please try again!</string>
     <string name="noResultsFound">No results found</string>
     <string name="daysForecastForScrollingTextView">6 day Forecast for:\t</string>
-    <string name="kalamataMarker">Marker in Kalamata</string>
+    <string name="kalamataMarker">Kalamata</string>
     <string name="gpsNotSupported">Gps not Supported</string>
 
 </resources>
