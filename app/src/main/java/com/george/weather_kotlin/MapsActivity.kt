@@ -13,13 +13,22 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.george.weather_kotlin.databinding.ActivityMapsBinding
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks
@@ -33,6 +42,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
 
 
@@ -106,7 +118,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         downloadDialog.setNegativeButton(
             R.string.epilogiNo
         ) { dialogInterface, i -> //Do some actions if user wants to manually insert addres
-            //manualInputOfAddress()
+            manualInputOfAddress()
         }
         downloadDialog.show()
     }
@@ -327,6 +339,161 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.d("Values", "$latitudeToPass $longtitudeToPass")
             startActivity(intent)
         }*/
+    }
+
+    //Method to manually input location
+    private fun manualInputOfAddress() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.titleInsertAddress)
+        builder.setMessage(R.string.editTextMessageInfo)
+        val mMessageEditText = EditText(this)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        mMessageEditText.setLayoutParams(lp)
+        //set id to edittext to use itin tests
+        mMessageEditText.setId(444)
+        builder.setView(mMessageEditText)
+        builder.setPositiveButton(
+            resources.getString(R.string.userOK)
+        ) { dialog, id ->
+            //Set ProgressBar Visible
+            binding.progressBarMaps.setVisibility(View.VISIBLE)
+            //Checking first if user has inserted an address
+            if (!TextUtils.isEmpty(mMessageEditText.getText().toString())) {
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////
+                //Because geocode.getLocationFromName didn't work I decided to use reverse geocode api
+                //I used Volley library to fetch location from address and then populated map the usual way as with automatic location
+                ///////////////////////////////////////////////////////////////////////////////////////////////////
+                val requestQueue: RequestQueue = Volley.newRequestQueue(this@MapsActivity)
+                val url =
+                    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+                            mMessageEditText.getText()
+                                .toString() + "&key=" + getString(R.string.google_maps_key)
+                Log.e("URLAIZA",url)
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, object : Response.Listener<JSONObject> {
+                        override fun onResponse(response: JSONObject?) {
+                            val jsonObject = response as JSONObject
+                            //used this values if user types something unusual
+                            var lat = 0.0
+                            var lng = 0.0
+                            try {
+                                lng =
+                                    (jsonObject["results"] as JSONArray).getJSONObject(0)
+                                        .getJSONObject("geometry").getJSONObject("location")
+                                        .getDouble("lng")
+                                lat =
+                                    (jsonObject["results"] as JSONArray).getJSONObject(0)
+                                        .getJSONObject("geometry").getJSONObject("location")
+                                        .getDouble("lat")
+                                latitudeToPass = lat.toString()
+                                longtitudeToPass = lng.toString()
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
+                            }
+                            val geocoder = Geocoder(applicationContext)
+                            try {
+                                //Check if user has inserted wrong address
+                                if (lat == 0.0 && lng == 0.0) {
+                                    Toast.makeText(
+                                        this@MapsActivity,
+                                        getString(R.string.noLocationFound),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                                    return
+                                }
+                                val addresses =
+                                    geocoder.getFromLocation(lat, lng, 1)
+                                if (addresses != null && addresses.size > 0) {
+                                    var result =
+                                        addresses[0].locality + ":"
+                                    result += addresses[0].adminArea
+                                    addressToPass = result
+                                    val latLng = LatLng(lat, lng)
+                                    if (marker != null) {
+                                        marker!!.remove()
+                                        marker = mMap.addMarker(
+                                            MarkerOptions().position(latLng).title(result)
+                                        )
+                                        mMap.setMaxZoomPreference(10f)
+                                        mMap.moveCamera(
+                                            CameraUpdateFactory.newLatLngZoom(
+                                                latLng,
+                                                10.0f
+                                            )
+                                        )
+
+                                        //Set listener to marker
+                                        clickMarker()
+                                        //Set Progressbar invisible
+                                        binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                                        //Show Snackbar to info to user that he/she has to click on its balloon
+                                        Toast.makeText(
+                                                this@MapsActivity,
+                                                R.string.editTextMessageInfo,
+                                                Toast.LENGTH_LONG
+                                            )
+                                            .show()
+                                    } else {
+                                        marker = mMap.addMarker(
+                                            MarkerOptions().position(latLng).title(result)
+                                        )
+                                        mMap.setMaxZoomPreference(10f)
+                                        mMap.moveCamera(
+                                            CameraUpdateFactory.newLatLngZoom(
+                                                latLng,
+                                                10.0f
+                                            )
+                                        )
+
+                                        //Set listener to marker
+                                        clickMarker()
+                                        //Set Progressbar invisible
+                                        binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                                        //Show Snackbar to info to user that he/she has to click on its balloon
+                                        Toast.makeText(
+                                                this@MapsActivity,
+                                                R.string.editTextMessageInfo,
+                                                Toast.LENGTH_LONG
+                                            )
+                                            .show()
+                                    }
+                                }
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                        }
+                }, object : Response.ErrorListener {
+                        override fun onErrorResponse(error: VolleyError?) {
+                            Toast.makeText(
+                                this@MapsActivity,
+                                getString(R.string.tryAgain),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                requestQueue.add(jsonObjectRequest)
+            } else {
+                //Prompt user to insert address
+                Toast.makeText(
+                    this@MapsActivity,
+                    getString(R.string.insertAddress),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        builder.setNegativeButton(
+            resources.getString(R.string.cancel)
+        ) { dialog, id -> // User clicked the "Cancel" button, so dismiss the dialog
+            dialog?.dismiss()
+        }
+
+        // Create and show the AlertDialog
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     /**
