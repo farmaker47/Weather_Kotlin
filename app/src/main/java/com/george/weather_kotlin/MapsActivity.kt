@@ -47,6 +47,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
+const val LATITUDE_FROM_MAPS = "latitude_from_maps"
+const val LONGTITUDE_FROM_MAPS = "longtitude_from_maps"
+const val ADDRESS_TO_PASS = "address_to_pass"
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -331,14 +334,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun clickMarker() {
         //Add marker click listener
-        /*mMap.setOnInfoWindowClickListener {
+        mMap.setOnInfoWindowClickListener {
             val intent = Intent(this@MapsActivity, WeatherActivity::class.java)
-            intent.putExtra(MapsActivity.LATITUDE_FROM_MAPS, latitudeToPass)
-            intent.putExtra(MapsActivity.LONGTITUDE_FROM_MAPS, longtitudeToPass)
-            intent.putExtra(MapsActivity.ADDRESS_TO_PASS, addressToPass)
+            intent.putExtra(LATITUDE_FROM_MAPS, latitudeToPass)
+            intent.putExtra(LONGTITUDE_FROM_MAPS, longtitudeToPass)
+            intent.putExtra(ADDRESS_TO_PASS, addressToPass)
             Log.d("Values", "$latitudeToPass $longtitudeToPass")
             startActivity(intent)
-        }*/
+        }
     }
 
     //Method to manually input location
@@ -509,10 +512,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val kalamata = LatLng(37.0502925, 22.1307059)
+        // Add a marker in Kalamata and move the camera
+        /*val kalamata = LatLng(37.0502925, 22.1307059)
         mMap.addMarker(MarkerOptions().position(kalamata).title(getString(R.string.kalamataMarker)))
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(kalamata))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kalamata, 8.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kalamata, 8.0f))*/
     }
 }
