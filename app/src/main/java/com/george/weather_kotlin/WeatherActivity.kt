@@ -1,9 +1,11 @@
 package com.george.weather_kotlin
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_weather.*
 
 class WeatherActivity : AppCompatActivity() {
@@ -30,9 +32,8 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         val bundle = Bundle()
-        bundle.putString("latitude", "$latitude")
-        bundle.putString("longtitude", "$longtitude")
-        bundle.putString("address", "$address")
+        val toPass = CoordinatesAndAddress(latitude,longtitude,address)
+        bundle.putParcelable("coordinates",toPass)
         //Delete navGraph from xml and set here
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph, bundle)
 
@@ -45,4 +46,8 @@ class WeatherActivity : AppCompatActivity() {
 
 }
 
-data class CoordinatesAndAddress(val latitude: String, val longtitude: String, val address: String)
+@Parcelize
+data class CoordinatesAndAddress(
+    val latitude: String?,
+    val longtitude: String?,
+    val address: String?) : Parcelable

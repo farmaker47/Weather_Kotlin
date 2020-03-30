@@ -19,12 +19,10 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val latitude = WeatherFragmentArgs.fromBundle(arguments!!).latitude
-        val longtitude = WeatherFragmentArgs.fromBundle(arguments!!).longtitude
-        val address = WeatherFragmentArgs.fromBundle(arguments!!).address
 
-        Log.e("Weather_Fragment", "$latitude $longtitude $address")
+        val toGet = WeatherFragmentArgs.fromBundle(arguments!!).coordinates
+
+        Log.e("Weather_Fragment", toGet.latitude + " " + toGet.longtitude + " " + toGet.address)
 
 
         return inflater.inflate(R.layout.fragment_first, container, false)

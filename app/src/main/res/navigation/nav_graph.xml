@@ -10,11 +10,7 @@
         android:name="com.george.weather_kotlin.weather_fragment.WeatherFragment"
         android:label="@string/weather_fragment_label"
         tools:layout="@layout/fragment_first">
-        <argument android:name="latitude"
-            app:argType="string"/>
-        <argument android:name="longtitude"
-            app:argType="string"/>
-        <argument android:name="address"
-            app:argType="string"/>
+        <argument android:name="coordinates"
+            app:argType="com.george.weather_kotlin.CoordinatesAndAddress"/>
     </fragment>
 </navigation>
