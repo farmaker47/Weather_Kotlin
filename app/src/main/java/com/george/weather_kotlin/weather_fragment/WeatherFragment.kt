@@ -26,6 +26,7 @@ class WeatherFragment : Fragment() {
     ): View? {
 
         binding = WeatherFragmentBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
 
 
         val application = requireNotNull(activity).application
@@ -35,14 +36,16 @@ class WeatherFragment : Fragment() {
         weatherViewModel =
             ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
+        binding.viewModel = weatherViewModel
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
+        //view.findViewById<Button>(R.id.button_first).setOnClickListener {
             //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        //}
     }
 }
