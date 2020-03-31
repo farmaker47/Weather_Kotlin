@@ -7,25 +7,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.george.weather_kotlin.R
+import com.george.weather_kotlin.databinding.WeatherFragmentBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class WeatherFragment : Fragment() {
 
+    private lateinit var binding: WeatherFragmentBinding
+    private lateinit var weatherViewModel: WeatherViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        binding = WeatherFragmentBinding.inflate(inflater)
+
+
+        val application = requireNotNull(activity).application
         val toGet = WeatherFragmentArgs.fromBundle(arguments!!).coordinates
+        //Log.i("Weather_Fragment", toGet.latitude + " " + toGet.longtitude + " " + toGet.address)
+        val viewModelFactory = WeatherViewModelFactory(toGet, application)
+        weatherViewModel =
+            ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
-        Log.e("Weather_Fragment", toGet.latitude + " " + toGet.longtitude + " " + toGet.address)
-
-
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
