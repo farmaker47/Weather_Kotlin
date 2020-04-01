@@ -38,6 +38,10 @@ class WeatherFragment : Fragment() {
 
         binding.viewModel = weatherViewModel
 
+        binding.weatherRecyclerView.adapter= WeatherRecyclerViewAdapter(WeatherRecyclerViewAdapter.OnClickListener {
+            //viewModel.displayPropertyDetails(it)
+        })
+
         return binding.root
     }
 

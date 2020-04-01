@@ -22,15 +22,13 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
 
     // Internally, we use a MutableLiveData, because we will be updating the List of WeatherJsonObject
     // with new values
-    private val _properties = MutableLiveData<WeatherJsonObject>()
-
+    private val _weatherData = MutableLiveData<WeatherJsonObject>()
     // The external LiveData interface to the property is immutable, so only this class can modify
-    val properties: LiveData<WeatherJsonObject>
-        get() = _properties
+    val weatherData: LiveData<WeatherJsonObject>
+        get() = _weatherData
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
-
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -55,15 +53,15 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
             )
             try {
                 // this will run on a thread managed by Retrofit
-                val listResult = getPropertiesDeferred.await()
+                val jsonResult = getPropertiesDeferred.await()
 
                 //properties
-                _properties.value = listResult
-                Log.e("PROPERTIES", _properties.toString())
+                _weatherData.value = jsonResult
+                Log.e("RESULTS", _weatherData.toString())
             } catch (e: Exception) {
                 //properties
                 //_properties.value = WeatherJsonObject()
-                Log.e("EXCEPTION", e.toString())
+                Log.i("EXCEPTION", e.toString())
             }
         }
 
