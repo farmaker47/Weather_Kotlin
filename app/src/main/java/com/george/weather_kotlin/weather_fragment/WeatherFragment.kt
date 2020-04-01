@@ -38,9 +38,11 @@ class WeatherFragment : Fragment() {
 
         binding.viewModel = weatherViewModel
 
-        binding.weatherRecyclerView.adapter= WeatherRecyclerViewAdapter(WeatherRecyclerViewAdapter.OnClickListener {
-            //viewModel.displayPropertyDetails(it)
-        })
+        //Passing listener and viewmodel to adapter
+        binding.weatherRecyclerView.adapter =
+            WeatherRecyclerViewAdapter(WeatherRecyclerViewAdapter.OnClickListener {
+                //viewModel.displayPropertyDetails(it)
+            }, weatherViewModel)
 
         return binding.root
     }
@@ -49,7 +51,7 @@ class WeatherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         //}
     }
 }

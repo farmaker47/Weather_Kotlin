@@ -30,7 +30,10 @@ import com.george.weather_kotlin.network.MainInfo
  * data, including computing diffs between lists.
  * @param onClick a lambda that takes the
  */
-class WeatherRecyclerViewAdapter(val onClickListener: OnClickListener) :
+class WeatherRecyclerViewAdapter(
+    val onClickListener: OnClickListener,
+    val weatherViewModel: WeatherViewModel
+) :
     ListAdapter<MainInfo, WeatherRecyclerViewAdapter.WeatherRecyclerViewHolder>(DiffCallback) {
     /**
      * The WeatherRecyclerViewHolder constructor takes the binding variable from the associated
@@ -38,8 +41,9 @@ class WeatherRecyclerViewAdapter(val onClickListener: OnClickListener) :
      */
     class WeatherRecyclerViewHolder(private var binding: ForecastListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(mainInfo: MainInfo) {
+        fun bind(mainInfo: MainInfo, weatherViewModel: WeatherViewModel) {
             binding.mainInfo = mainInfo
+            binding.viewModel = weatherViewModel
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -78,7 +82,7 @@ class WeatherRecyclerViewAdapter(val onClickListener: OnClickListener) :
         holder.itemView.setOnClickListener {
             onClickListener.onClick(mainInfo)
         }
-        holder.bind(mainInfo)
+        holder.bind(mainInfo, weatherViewModel)
     }
 
     /**
