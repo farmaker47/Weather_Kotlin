@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.george.weather_kotlin.R
 import com.george.weather_kotlin.databinding.WeatherFragmentBinding
 
@@ -19,6 +20,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var mWeatherRecyclerViewAdapter: WeatherRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,7 @@ class WeatherFragment : Fragment() {
         binding.viewModel = weatherViewModel
 
         //Passing listener and viewmodel to adapter
+        binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.weatherRecyclerView.adapter =
             WeatherRecyclerViewAdapter(WeatherRecyclerViewAdapter.OnClickListener {
                 //viewModel.displayPropertyDetails(it)

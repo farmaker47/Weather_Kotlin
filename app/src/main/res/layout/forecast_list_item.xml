@@ -27,6 +27,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="mainInfo"
             type="com.george.weather_kotlin.network.MainInfo" />
@@ -37,85 +38,63 @@
 
     </data>
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardBackgroundImage"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:background="#fff"
+        android:layout_margin="8dp"
+        android:paddingLeft="@dimen/list_item_padding_horizontal"
+        android:paddingTop="@dimen/list_item_padding_vertical"
+        android:paddingRight="@dimen/list_item_padding_horizontal"
+        android:paddingBottom="@dimen/list_item_padding_vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="@dimen/list_icon"
+            android:layout_height="@dimen/list_icon"
+            android:src="@drawable/art_clouds"
+            tools:src="@drawable/art_clouds" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/list_item_padding_horizontal"
-            android:paddingTop="@dimen/list_item_padding_vertical"
-            android:paddingRight="@dimen/list_item_padding_horizontal"
-            android:paddingBottom="@dimen/list_item_padding_vertical">
+            android:layout_marginStart="@dimen/list_item_date_start_margin"
+            android:text="@{mainInfo.dt_txt}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintLeft_toRightOf="@+id/weather_icon"
+            tools:text="Today, April 03" />
 
-            <ImageView
-                android:id="@+id/weather_icon"
-                android:layout_width="@dimen/list_icon"
-                android:layout_height="@dimen/list_icon"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline"
-                tools:src="@drawable/art_clouds" />
+        <TextView
+            android:id="@+id/weather_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Integer.toString(viewModel.weatherData.city.population)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/secondary_text"
+            tools:text="Rainy" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{mainInfo.dt_txt}"
-                android:layout_marginStart="@dimen/list_item_date_start_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintLeft_toRightOf="@+id/weather_icon"
-                tools:text="Today, April 03" />
+        <TextView
+            android:id="@+id/high_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/forecast_temperature_space"
+            android:fontFamily="sans-serif-light"
+            android:text="@{Double.toString(mainInfo.main.temp_max)}"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/forecast_text_size_max"
+            tools:text="19\u00b0" />
 
-            <TextView
-                android:id="@+id/weather_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{Integer.toString(viewModel.weatherData.city.population)}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/secondary_text"
-                app:layout_constraintLeft_toLeftOf="@+id/date"
-                app:layout_constraintTop_toTopOf="@+id/guideline"
-                tools:text="Rainy" />
+        <TextView
+            android:id="@+id/low_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="end"
+            android:text="@{Double.toString(mainInfo.main.temp_min)}"
+            android:textSize="@dimen/forecast_text_size_min"
+            tools:text="10\u00b0" />
 
-            <TextView
-                android:id="@+id/high_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/forecast_temperature_space"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/forecast_text_size_max"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintRight_toLeftOf="@+id/low_temperature"
-                app:layout_constraintTop_toTopOf="@+id/guideline"
-                tools:text="19\u00b0" />
-
-            <TextView
-                android:id="@+id/low_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:gravity="end"
-                android:textSize="@dimen/forecast_text_size_min"
-                app:layout_constraintBottom_toBottomOf="@+id/guideline"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline"
-                tools:text="10\u00b0" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </layout>

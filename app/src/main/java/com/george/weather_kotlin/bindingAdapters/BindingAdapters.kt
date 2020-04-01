@@ -44,18 +44,15 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<MainInfo>?) {
 fun bindStatus(statusImageView: ImageView, status: WeatherApiStatus?) {
     when (status) {
         WeatherApiStatus.LOADING -> {
-            Log.e("LOADING","YES")
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
             //Glide.with(statusImageView.context).load(R.drawable.loading_animation).into(statusImageView)
         }
         WeatherApiStatus.ERROR -> {
-            Log.e("ERROR","YES")
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }
         WeatherApiStatus.DONE -> {
-            Log.e("DONE","YES")
             statusImageView.visibility = View.GONE
         }
     }
