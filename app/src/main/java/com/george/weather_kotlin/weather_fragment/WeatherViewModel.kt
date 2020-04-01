@@ -17,8 +17,16 @@ import kotlinx.coroutines.launch
 const val connectionAble = "ec715631be02bd4b13f25d478d34ad8e"
 const val units = "metric"
 
+enum class WeatherApiStatus { LOADING, ERROR, DONE }
+
 class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, application: Application) :
     AndroidViewModel(application) {
+
+    // The internal MutableLiveData that stores the status of the most recent request
+    private val _status = MutableLiveData<WeatherApiStatus>()
+    // The external immutable LiveData for the request status
+    val status: LiveData<WeatherApiStatus>
+        get() = _status
 
     // Internally, we use a MutableLiveData, because we will be updating the List of WeatherJsonObject
     // with new values
@@ -29,6 +37,7 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
+
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -52,8 +61,10 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
                 connectionAble
             )
             try {
+                _status.value = WeatherApiStatus.LOADING
                 // this will run on a thread managed by Retrofit
                 val jsonResult = getPropertiesDeferred.await()
+                _status.value = WeatherApiStatus.DONE
 
                 //properties
                 _weatherData.value = jsonResult
@@ -61,6 +72,7 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
             } catch (e: Exception) {
                 //properties
                 //_properties.value = WeatherJsonObject()
+                _status.value = WeatherApiStatus.ERROR
                 Log.i("EXCEPTION", e.toString())
             }
         }
