@@ -47,6 +47,10 @@ class WeatherFragment : Fragment() {
                 //viewModel.displayPropertyDetails(it)
             }, weatherViewModel)
 
+        binding.fab.setOnClickListener{
+            weatherViewModel.getWeatherDetails()
+        }
+
         return binding.root
     }
 

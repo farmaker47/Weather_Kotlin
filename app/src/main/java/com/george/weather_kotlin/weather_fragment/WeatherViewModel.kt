@@ -59,7 +59,7 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
         getWeatherDetails()
     }
 
-    private fun getWeatherDetails() {
+    fun getWeatherDetails() {
         coroutineScope.launch {
             // Get the Deferred object for our Retrofit request
             val getPropertiesDeferred = WeatherApi.retrofitService.getProperties(
