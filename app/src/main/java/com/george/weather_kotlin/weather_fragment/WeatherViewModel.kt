@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 const val connectionAble = "ec715631be02bd4b13f25d478d34ad8e"
 const val units = "metric"
@@ -34,6 +35,13 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
     // The external LiveData interface to the property is immutable, so only this class can modify
     val weatherData: LiveData<WeatherJsonObject>
         get() = _weatherData
+
+    // Internally, we use a MutableLiveData, because we will be updating the List of WeatherJsonObject
+    // with new values
+    private val _dateHour = String()
+    // The external LiveData interface to the property is immutable, so only this class can modify
+    val dateHour: String
+        get() = _dateHour
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()

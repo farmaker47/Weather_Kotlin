@@ -12,7 +12,7 @@
     <string name="titleInsertAddress">Insert your Address</string>
     <string name="insertAddress">Insert an address please!</string>
     <string name="tryAgain">Please try again!</string>
-    <string name="title_activity_weather">WeatherActivity</string>
+    <string name="title_activity_weather">Weather</string>
 
     <!-- Weather Conditions (From OpenWeatherMap) -->
     <string name="condition_2xx">Storm</string>

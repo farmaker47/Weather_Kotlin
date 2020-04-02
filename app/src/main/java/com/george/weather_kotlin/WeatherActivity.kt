@@ -18,6 +18,7 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Checking info of intent passed from MapsActivity
         val intent = intent
@@ -38,10 +39,6 @@ class WeatherActivity : AppCompatActivity() {
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph, bundle)
 
         Log.e("ALL", latitude + longtitude + address)
-
-        fab.setOnClickListener { view ->
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-        }
     }
 
 }
