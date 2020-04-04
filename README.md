@@ -9,10 +9,10 @@ This project is in __Kotlin__ language and has:
 2) Google Maps.
 3) Manual or automatic input of location based on GPS.
 4) Android Architecture Components - Collection of libraries that help you design robust, testable, and maintainable apps.
-    LiveData - Data objects that notify views when the underlying database changes.
-    ViewModel - Stores UI-related data that isn't destroyed on UI changes.
-    ViewBinding - Generates a binding class for each XML layout file present in that module and allows you to more easily write code that           interacts with views.
-    Coroutine - For Asynchronous tasks and more..
+    - LiveData - Data objects that notify views when the underlying database changes.
+    - ViewModel - Stores UI-related data that isn't destroyed on UI changes.
+    - ViewBinding - Generates a binding class for each XML layout file present in that module and allows you to more easily write code that           interacts with views.
+    - Coroutine - For Asynchronous tasks and more..
 5) BindingAdapters
 
 also:
