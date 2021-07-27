@@ -68,7 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_maps)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -190,16 +190,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }.build()
             googleApiClient?.connect()
             val locationRequest: LocationRequest = LocationRequest.create()
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            locationRequest.setInterval(30 * 1000)
-            locationRequest.setFastestInterval(5 * 1000)
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            locationRequest.interval = 30000L
+            locationRequest.fastestInterval = 5000L
             val builder: LocationSettingsRequest.Builder = LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest)
             builder.setAlwaysShow(true)
             val result: PendingResult<LocationSettingsResult> =
                 LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
             result.setResultCallback { result ->
-                val status: Status = result.getStatus()
+                val status: Status = result.status
                 when (status.statusCode) {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
                         // Show the dialog by calling startResolutionForResult(),
@@ -262,9 +262,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             //Set listener to marker
                             clickMarker()
                             //Set Progressbar invisible
-                            binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                            binding.progressBarMaps.visibility = View.INVISIBLE
                             //Show Snackbar to info to user that he/she has to click on its balloon
-                            Toast.makeText(this@MapsActivity, R.string.editTextMessageInfo, Toast.LENGTH_LONG)
+                            Toast.makeText(
+                                this@MapsActivity,
+                                R.string.editTextMessageInfo,
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
                         } else {
                             marker = mMap.addMarker(MarkerOptions().position(latLng).title(result))
@@ -275,9 +279,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             //Set listener to marker
                             clickMarker()
                             //Set Progressbar invisible
-                            binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                            binding.progressBarMaps.visibility = View.INVISIBLE
                             //Show Snackbar to info to user that he/she has to click on its balloon
-                            Toast.makeText(this@MapsActivity, R.string.editTextMessageInfo, Toast.LENGTH_LONG)
+                            Toast.makeText(
+                                this@MapsActivity,
+                                R.string.editTextMessageInfo,
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
                         }
                     }
@@ -372,7 +380,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             //Set ProgressBar Visible
             binding.progressBarMaps.visibility = View.VISIBLE
             //Checking first if user has inserted an address
-            if (!TextUtils.isEmpty(mMessageEditText.getText().toString())) {
+            if (!TextUtils.isEmpty(mMessageEditText.text.toString())) {
 
                 ///////////////////////////////////////////////////////////////////////////////////////////////////
                 //Because geocode.getLocationFromName didn't work I decided to use reverse geocode api
@@ -383,8 +391,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     "https://maps.googleapis.com/maps/api/geocode/json?address=" +
                             mMessageEditText.getText()
                                 .toString() + "&key=" + getString(R.string.google_maps_key)
-                Log.e("URLAIZA",url)
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null, object : Response.Listener<JSONObject> {
+                Log.e("URLAIZA", url)
+                val jsonObjectRequest = JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    object : Response.Listener<JSONObject> {
                         override fun onResponse(response: JSONObject?) {
                             val jsonObject = response as JSONObject
                             //used this values if user types something unusual
@@ -413,7 +425,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         getString(R.string.noLocationFound),
                                         Toast.LENGTH_LONG
                                     ).show()
-                                    binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                                    binding.progressBarMaps.visibility = View.INVISIBLE
                                     return
                                 }
                                 val addresses =
@@ -440,13 +452,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         //Set listener to marker
                                         clickMarker()
                                         //Set Progressbar invisible
-                                        binding.progressBarMaps.setVisibility(View.INVISIBLE)
+                                        binding.progressBarMaps.visibility = View.INVISIBLE
                                         //Show Snackbar to info to user that he/she has to click on its balloon
                                         Toast.makeText(
-                                                this@MapsActivity,
-                                                R.string.editTextMessageInfo,
-                                                Toast.LENGTH_LONG
-                                            )
+                                            this@MapsActivity,
+                                            R.string.editTextMessageInfo,
+                                            Toast.LENGTH_LONG
+                                        )
                                             .show()
                                     } else {
                                         marker = mMap.addMarker(
@@ -466,10 +478,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         binding.progressBarMaps.setVisibility(View.INVISIBLE)
                                         //Show Snackbar to info to user that he/she has to click on its balloon
                                         Toast.makeText(
-                                                this@MapsActivity,
-                                                R.string.editTextMessageInfo,
-                                                Toast.LENGTH_LONG
-                                            )
+                                            this@MapsActivity,
+                                            R.string.editTextMessageInfo,
+                                            Toast.LENGTH_LONG
+                                        )
                                             .show()
                                     }
                                 }
@@ -477,14 +489,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 e.printStackTrace()
                             }
                         }
-                }, object : Response.ErrorListener {
-                        override fun onErrorResponse(error: VolleyError?) {
-                            Toast.makeText(
-                                this@MapsActivity,
-                                getString(R.string.tryAgain),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    },
+                    {
+                        Toast.makeText(
+                            this@MapsActivity,
+                            getString(R.string.tryAgain),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     })
                 requestQueue.add(jsonObjectRequest)
             } else {
