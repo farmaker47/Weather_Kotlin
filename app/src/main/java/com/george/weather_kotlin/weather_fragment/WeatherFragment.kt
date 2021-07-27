@@ -25,26 +25,26 @@ class WeatherFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = WeatherFragmentBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
 
         val application = requireNotNull(activity).application
-        val toGet = WeatherFragmentArgs.fromBundle(arguments!!).coordinates
+        val toGet = WeatherFragmentArgs.fromBundle(requireArguments()).coordinates
         //Log.i("Weather_Fragment", toGet.latitude + " " + toGet.longtitude + " " + toGet.address)
         val viewModelFactory = WeatherViewModelFactory(toGet, application)
-        weatherViewModel =
-            ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
         binding.viewModel = weatherViewModel
 
         //Passing listener and viewmodel to adapter
-        binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        //binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.weatherRecyclerView.adapter =
             WeatherRecyclerViewAdapter(WeatherRecyclerViewAdapter.OnClickListener {
                 //viewModel.displayPropertyDetails(it)
+
             }, weatherViewModel)
 
         binding.fab.setOnClickListener{

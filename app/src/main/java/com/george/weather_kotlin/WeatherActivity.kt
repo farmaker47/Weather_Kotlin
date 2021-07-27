@@ -33,12 +33,13 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         val bundle = Bundle()
-        val toPass = CoordinatesAndAddress(latitude,longtitude,address)
-        bundle.putParcelable("coordinates",toPass)
+        val toPass = CoordinatesAndAddress(latitude, longtitude, address)
+        bundle.putParcelable("coordinates", toPass)
         //Delete navGraph from xml and set here
+        // Details: https://developer.android.com/guide/navigation/navigation-pass-data#start
         findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph, bundle)
 
-        Log.e("ALL", latitude + longtitude + address)
+        Log.i("ALL_Info", latitude + longtitude + address)
     }
 
 }
@@ -47,4 +48,5 @@ class WeatherActivity : AppCompatActivity() {
 data class CoordinatesAndAddress(
     val latitude: String?,
     val longtitude: String?,
-    val address: String?) : Parcelable
+    val address: String?
+) : Parcelable
