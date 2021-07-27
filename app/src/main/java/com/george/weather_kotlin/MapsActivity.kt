@@ -258,7 +258,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f))
 
                             //Remove updates so you can click the marker
-                            locationManager?.removeUpdates(locationListener)
+                            locationListener?.let { locationManager?.removeUpdates(it) }
                             //Set listener to marker
                             clickMarker()
                             //Set Progressbar invisible
@@ -271,7 +271,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.setMaxZoomPreference(20f)
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 21.0f))
                             //Remove updates so you can click the marker
-                            locationManager?.removeUpdates(locationListener)
+                            locationListener?.let { locationManager?.removeUpdates(it) }
                             //Set listener to marker
                             clickMarker()
                             //Set Progressbar invisible
@@ -316,19 +316,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // for ActivityCompat#requestPermissions for more details.
                 return
             }
-            locationManager?.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                0,
-                0f,
-                locationListener
-            )
+            locationListener.let {
+                it?.let { it1 ->
+                    locationManager?.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        0,
+                        0f,
+                        it1
+                    )
+                }
+            }
         } else if (locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager?.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                0,
-                0f,
-                locationListener
-            )
+            locationListener.let {
+                it?.let { it1 ->
+                    locationManager?.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        0,
+                        0f,
+                        it1
+                    )
+                }
+            }
         }
     }
 
@@ -354,15 +362,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT
         )
-        mMessageEditText.setLayoutParams(lp)
+        mMessageEditText.layoutParams = lp
         //set id to edittext to use itin tests
-        mMessageEditText.setId(444)
+        mMessageEditText.id = 444
         builder.setView(mMessageEditText)
         builder.setPositiveButton(
             resources.getString(R.string.userOK)
         ) { dialog, id ->
             //Set ProgressBar Visible
-            binding.progressBarMaps.setVisibility(View.VISIBLE)
+            binding.progressBarMaps.visibility = View.VISIBLE
             //Checking first if user has inserted an address
             if (!TextUtils.isEmpty(mMessageEditText.getText().toString())) {
 
