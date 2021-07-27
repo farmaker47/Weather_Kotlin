@@ -43,7 +43,7 @@ class WeatherRecyclerViewAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(mainInfo: MainInfo, weatherViewModel: WeatherViewModel) {
             binding.mainInfo = mainInfo
-            binding.viewModel = weatherViewModel
+            //binding.viewModel = weatherViewModel
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()

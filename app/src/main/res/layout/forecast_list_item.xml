@@ -32,11 +32,6 @@
             name="mainInfo"
             type="com.george.weather_kotlin.network.MainInfo" />
 
-        <variable
-            name="viewModel"
-            type="com.george.weather_kotlin.weather_fragment.WeatherViewModel" />
-        <!--        android:text="@{Integer.toString(viewModel.weatherData.city.population)}"-->
-
     </data>
 
     <androidx.cardview.widget.CardView

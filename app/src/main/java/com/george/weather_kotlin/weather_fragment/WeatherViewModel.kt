@@ -2,18 +2,12 @@ package com.george.weather_kotlin.weather_fragment
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.george.weather_kotlin.CoordinatesAndAddress
 import com.george.weather_kotlin.network.WeatherApi
 import com.george.weather_kotlin.network.WeatherJsonObject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 const val connectionAble = "ec715631be02bd4b13f25d478d34ad8e"
 const val units = "metric"
@@ -43,11 +37,6 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
     val dateHour: String
         get() = _dateHour
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
-    private var viewModelJob = Job()
-
-    // the Coroutine runs using the Main (UI) dispatcher
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         Log.i(
@@ -60,7 +49,7 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
     }
 
     fun getWeatherDetails() {
-        coroutineScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             // Get the Deferred object for our Retrofit request
             val getPropertiesDeferred = WeatherApi.retrofitService.getProperties(
                 coordinatesAndAddress.latitude,
@@ -93,7 +82,6 @@ class WeatherViewModel(val coordinatesAndAddress: CoordinatesAndAddress, applica
      */
     override fun onCleared() {
         super.onCleared()
-        viewModelJob.cancel()
     }
 
 }

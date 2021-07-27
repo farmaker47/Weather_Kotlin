@@ -17,19 +17,6 @@
         android:background="#DAD9D9"
         tools:context=".weather_fragment.WeatherActivity">
 
-        <!--<TextView
-            android:id="@+id/textview_first"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@{viewModel.weatherData.list[0].weather[0].main}"
-        app:listData="@{viewModel.properties}"
-        app:marsApiStatus="@{viewModel.status}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
-
         <TextView
             android:id="@+id/textViewMainCity"
             android:layout_width="wrap_content"
@@ -38,6 +25,7 @@
             android:padding="8dp"
             android:textSize="22sp"
             android:text="@{`City= `+ viewModel.weatherData.city.name}"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="16dp"
