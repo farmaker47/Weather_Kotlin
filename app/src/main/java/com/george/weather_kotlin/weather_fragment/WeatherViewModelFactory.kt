@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.george.weather_kotlin.CoordinatesAndAddress
 
-class WeatherViewModelFactory (
+class WeatherViewModelFactory /*(
     private val coordinatesAndAddress: CoordinatesAndAddress,
     private val application: Application): ViewModelProvider.Factory{
 
@@ -17,4 +17,4 @@ class WeatherViewModelFactory (
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 
-}
+}*/

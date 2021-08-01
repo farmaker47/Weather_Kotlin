@@ -7,19 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.george.weather_kotlin.R
 import com.george.weather_kotlin.databinding.WeatherFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
     private lateinit var binding: WeatherFragmentBinding
-    private lateinit var weatherViewModel: WeatherViewModel
+    private val weatherViewModel: WeatherViewModel by viewModels()
     private lateinit var mWeatherRecyclerViewAdapter: WeatherRecyclerViewAdapter
 
     override fun onCreateView(
@@ -32,10 +37,10 @@ class WeatherFragment : Fragment() {
 
 
         val application = requireNotNull(activity).application
-        val toGet = WeatherFragmentArgs.fromBundle(requireArguments()).coordinates
+        //val toGet = WeatherFragmentArgs.fromBundle(requireArguments()).coordinates
         //Log.i("Weather_Fragment", toGet.latitude + " " + toGet.longtitude + " " + toGet.address)
-        val viewModelFactory = WeatherViewModelFactory(toGet, application)
-        weatherViewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
+        //val viewModelFactory = WeatherViewModelFactory(toGet, application)
+        //weatherViewModel==//ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
         binding.viewModel = weatherViewModel
 
