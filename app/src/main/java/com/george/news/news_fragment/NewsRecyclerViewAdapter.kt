@@ -15,14 +15,19 @@
  *
  */
 
-package com.george.news.weather_fragment
+package com.george.news.news_fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.george.news.databinding.NewsListItemBinding
+import com.bumptech.glide.Glide
+import com.george.news.R
 import com.george.news.network.Articles
 
 /**
@@ -39,13 +44,19 @@ class NewsRecyclerViewAdapter(
      * The WeatherRecyclerViewHolder constructor takes the binding variable from the associated
      * ForecastListItem, which nicely gives it access to the full [MainInfo] information.
      */
-    class NewsRecyclerViewHolder(private var binding: NewsListItemBinding) :
+    class NewsRecyclerViewHolder(private var binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(mainInfo: Articles, newsViewModel: NewsViewModel) {
-            binding.mainInfo = mainInfo
+            //binding.mainInfo = mainInfo
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
+
+            val textView = itemView.findViewById<TextView>(R.id.news_text)
+            val imageView = itemView.findViewById<ImageView>(R.id.news_icon)
+
+            textView.text = mainInfo.title
+            Glide.with(imageView.context).load(mainInfo.urlToImage).placeholder(R.drawable.ic_broken_image).centerCrop().into(imageView)
         }
     }
 
@@ -70,8 +81,23 @@ class NewsRecyclerViewAdapter(
         parent: ViewGroup,
         viewType: Int
     ): NewsRecyclerViewHolder {
-        return NewsRecyclerViewHolder(NewsListItemBinding.inflate(LayoutInflater.from(parent.context)))
+
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
+        return NewsRecyclerViewHolder(binding)
+
+        /*return if(viewType == R.layout.news_list_item_first){
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
+            NewsRecyclerViewHolder(binding)
+        }else{
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
+            NewsRecyclerViewHolder(binding)
+        }*/
+
     }
+
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
@@ -82,6 +108,11 @@ class NewsRecyclerViewAdapter(
             onClickListener.onClick(mainInfo)
         }
         holder.bind(mainInfo, newsViewModel)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) R.layout.news_list_item_first
+        else R.layout.news_list_item
     }
 
     /**

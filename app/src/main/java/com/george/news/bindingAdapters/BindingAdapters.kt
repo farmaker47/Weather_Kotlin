@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.network.Articles
-import com.george.news.weather_fragment.NewsRecyclerViewAdapter
+import com.george.news.news_fragment.NewsRecyclerViewAdapter
 
 /**
  * When there is no MainInfo data (data is null), hide the [RecyclerView], otherwise show it.

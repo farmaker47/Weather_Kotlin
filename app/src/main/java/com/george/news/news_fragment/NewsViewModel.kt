@@ -1,7 +1,6 @@
-package com.george.news.weather_fragment
+package com.george.news.news_fragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.george.news.di.NetworkRepository
 import com.george.news.getAPIKey

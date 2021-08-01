@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.george.news.weather_fragment.NewsViewModel" />
+            type="com.george.news.news_fragment.NewsViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#DAD9D9"
-        tools:context=".weather_fragment.WeatherActivity">
+        tools:context=".news_fragment.WeatherActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weather_recycler_view"

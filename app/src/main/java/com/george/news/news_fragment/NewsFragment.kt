@@ -1,4 +1,4 @@
-package com.george.news.weather_fragment
+package com.george.news.news_fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.george.news.R
 import com.george.news.databinding.NewsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +20,6 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: NewsFragmentBinding
     private val newsViewModel: NewsViewModel by viewModels()
-    private lateinit var mNewsRecyclerViewAdapter: NewsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,10 @@ class NewsFragment : Fragment() {
         binding.weatherRecyclerView.adapter =
             NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
                 //viewModel.displayPropertyDetails(it)
+
+                findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(it.author))
+
+
 
             }, newsViewModel)
 
