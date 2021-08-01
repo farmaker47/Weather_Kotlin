@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/WeatherFragment">
+    app:startDestination="@id/NewsFragment">
 
     <fragment
-        android:id="@+id/WeatherFragment"
-        android:name="com.george.weather_kotlin.weather_fragment.WeatherFragment"
+        android:id="@+id/NewsFragment"
+        android:name="com.george.news.weather_fragment.NewsFragment"
         android:label="@string/weather_fragment_label"
-        tools:layout="@layout/weather_fragment">
+        tools:layout="@layout/news_fragment">
         <!--<argument android:name="coordinates"
             app:argType="com.george.weather_kotlin.CoordinatesAndAddress"/>-->
     </fragment>

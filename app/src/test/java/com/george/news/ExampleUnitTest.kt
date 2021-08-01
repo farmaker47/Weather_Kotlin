@@ -1,4 +1,4 @@
-package com.george.weather_kotlin
+package com.george.news
 
 import org.junit.Test
 

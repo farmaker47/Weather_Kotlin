@@ -15,35 +15,34 @@
  *
  */
 
-package com.george.weather_kotlin.weather_fragment
+package com.george.news.weather_fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.george.weather_kotlin.databinding.ForecastListItemBinding
-import com.george.weather_kotlin.network.MainInfo
+import com.george.news.databinding.NewsListItemBinding
+import com.george.news.network.Articles
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  * @param onClick a lambda that takes the
  */
-class WeatherRecyclerViewAdapter(
+class NewsRecyclerViewAdapter(
     val onClickListener: OnClickListener,
-    val weatherViewModel: WeatherViewModel
+    val newsViewModel: NewsViewModel
 ) :
-    ListAdapter<MainInfo, WeatherRecyclerViewAdapter.WeatherRecyclerViewHolder>(DiffCallback) {
+    ListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
     /**
      * The WeatherRecyclerViewHolder constructor takes the binding variable from the associated
      * ForecastListItem, which nicely gives it access to the full [MainInfo] information.
      */
-    class WeatherRecyclerViewHolder(private var binding: ForecastListItemBinding) :
+    class NewsRecyclerViewHolder(private var binding: NewsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(mainInfo: MainInfo, weatherViewModel: WeatherViewModel) {
+        fun bind(mainInfo: Articles, newsViewModel: NewsViewModel) {
             binding.mainInfo = mainInfo
-            //binding.viewModel = weatherViewModel
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -54,13 +53,13 @@ class WeatherRecyclerViewAdapter(
      * Allows the RecyclerView to determine which items have changed when the [List] of [MainInfo]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<MainInfo>() {
-        override fun areItemsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Articles>() {
+        override fun areItemsTheSame(oldItem: Articles, newItem: Articles): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
-            return oldItem.dt_txt == newItem.dt_txt
+        override fun areContentsTheSame(oldItem: Articles, newItem: Articles): Boolean {
+            return oldItem.title == newItem.title
         }
     }
 
@@ -70,19 +69,19 @@ class WeatherRecyclerViewAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): WeatherRecyclerViewHolder {
-        return WeatherRecyclerViewHolder(ForecastListItemBinding.inflate(LayoutInflater.from(parent.context)))
+    ): NewsRecyclerViewHolder {
+        return NewsRecyclerViewHolder(NewsListItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: WeatherRecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsRecyclerViewHolder, position: Int) {
         val mainInfo = getItem(position)
         holder.itemView.setOnClickListener {
             onClickListener.onClick(mainInfo)
         }
-        holder.bind(mainInfo, weatherViewModel)
+        holder.bind(mainInfo, newsViewModel)
     }
 
     /**
@@ -90,7 +89,7 @@ class WeatherRecyclerViewAdapter(
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [MarsProperty]
      */
-    class OnClickListener(val clickListener: (mainInfo: MainInfo) -> Unit) {
-        fun onClick(mainInfo: MainInfo) = clickListener(mainInfo)
+    class OnClickListener(val clickListener: (mainInfo: Articles) -> Unit) {
+        fun onClick(mainInfo: Articles) = clickListener(mainInfo)
     }
 }

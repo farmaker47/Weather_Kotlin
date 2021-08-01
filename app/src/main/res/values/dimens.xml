@@ -22,7 +22,7 @@
 
     <!-- Icon Sizes -->
     <dimen name="today_icon">96dp</dimen>
-    <dimen name="list_icon">40dp</dimen>
+    <dimen name="list_icon">80dp</dimen>
 
     <dimen name="forecast_text_size_max">34sp</dimen>
     <dimen name="forecast_text_size_min">16sp</dimen>

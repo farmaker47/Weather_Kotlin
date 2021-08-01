@@ -1,10 +1,10 @@
-package com.george.weather_kotlin
+package com.george.news
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class WeatherApplication: Application() {
+class NewsApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
