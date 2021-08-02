@@ -28,11 +28,11 @@ import com.george.news.news_fragment.NewsRecyclerViewAdapter
 /**
  * When there is no MainInfo data (data is null), hide the [RecyclerView], otherwise show it.
  */
-@BindingAdapter("listData")
+/*@BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Articles>?) {
     val adapter = recyclerView.adapter as NewsRecyclerViewAdapter
     adapter.submitList(data)
-}
+}*/
 
 @BindingAdapter("articleImage")
 fun bindImageView(imageView: ImageView, string: String?) {

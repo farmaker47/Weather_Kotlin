@@ -2,11 +2,11 @@ package com.george.news.news_fragment
 
 import android.app.Application
 import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.george.news.di.NetworkRepository
 import com.george.news.getAPIKey
-import com.george.news.network.NewsApiStatus
-import com.george.news.network.NewsResponse
-import com.george.news.network.Resource
+import com.george.news.network.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,13 +26,20 @@ class NewsViewModel @Inject constructor(
 
     // Internally, we use a MutableLiveData, because we will be updating the List of WeatherJsonObject
     // with new values
-    private val _weatherData = MutableLiveData<Resource<NewsResponse>>()
+    private val _newsData = MutableLiveData<Resource<NewsResponse>>()
     // The external LiveData interface to the property is immutable, so only this class can modify
-    val weatherData: LiveData<Resource<NewsResponse>> = _weatherData
+    val newsData: LiveData<Resource<NewsResponse>> = _newsData
+
+    var postListNews: LiveData<PagedList<Articles>>? = null
+
+    private val configNews = PagedList.Config.Builder()
+        .setPageSize(5)
+        .setInitialLoadSizeHint(5)
+        .setEnablePlaceholders(false)
+        .build()
 
     init {
-        //getWeatherDetails()
-        getNews()
+        fetchNews("us", "business", getAPIKey())
     }
 
     fun getWeatherDetails() {
@@ -67,14 +74,25 @@ class NewsViewModel @Inject constructor(
     }
 
     private fun getNews()  = viewModelScope.launch(Dispatchers.Default) {
-        _weatherData.postValue(Resource.loading(null))
+        _newsData.postValue(Resource.loading(null))
         networkRepository.getNews("us", "business", getAPIKey()).let {
             if (it.isSuccessful){
-                _weatherData.postValue(Resource.success(it.body()))
+                _newsData.postValue(Resource.success(it.body()))
             }else{
-                _weatherData.postValue(Resource.error(it.errorBody().toString(), null))
+                _newsData.postValue(Resource.error(it.errorBody().toString(), null))
             }
         }
+    }
+
+    fun fetchNews(country: String, category:String, apiKey:String) {
+        //loading.postValue(true)
+        postListNews = initializedPagedListBuilderNews(configNews, country, category, apiKey).build()
+    }
+
+    private fun initializedPagedListBuilderNews(config: PagedList.Config, country: String, category:String, apiKey:String):
+            LivePagedListBuilder<Int, Articles> {
+        val dataSourceFactory = NewsDataSourceFactory(networkRepository, viewModelScope, country, category, apiKey)
+        return LivePagedListBuilder(dataSourceFactory, config)
     }
 
 }

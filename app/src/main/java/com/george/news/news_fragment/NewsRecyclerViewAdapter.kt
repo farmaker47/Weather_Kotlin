@@ -19,14 +19,13 @@ package com.george.news.news_fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.databinding.library.baseAdapters.BR
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.network.Articles
 
@@ -38,24 +37,24 @@ import com.george.news.network.Articles
 class NewsRecyclerViewAdapter(
     val onClickListener: OnClickListener,
 ) :
-    ListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
+    PagedListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
     /**
-     * The WeatherRecyclerViewHolder constructor takes the binding variable from the associated
+     * The NewsRecyclerViewHolder constructor takes the binding variable from the associated
      * ForecastListItem, which nicely gives it access to the full [MainInfo] information.
      */
     class NewsRecyclerViewHolder(private var binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(mainInfo: Articles) {
-            //binding.mainInfo = mainInfo
+
+            binding.setVariable(BR.mainInfo, mainInfo)
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
 
-            val textView = itemView.findViewById<TextView>(R.id.news_text)
+            /*val textView = itemView.findViewById<TextView>(R.id.news_text)
             val imageView = itemView.findViewById<ImageView>(R.id.news_icon)
-
             textView.text = mainInfo.title
-            Glide.with(imageView.context).load(mainInfo.urlToImage).placeholder(R.drawable.ic_broken_image).centerCrop().into(imageView)
+            Glide.with(imageView.context).load(mainInfo.urlToImage).placeholder(R.drawable.ic_broken_image).centerCrop().into(imageView)*/
         }
     }
 
@@ -104,10 +103,12 @@ class NewsRecyclerViewAdapter(
     override fun onBindViewHolder(holder: NewsRecyclerViewHolder, position: Int) {
         val mainInfo = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(mainInfo)
+            mainInfo?.let { it1 -> onClickListener.onClick(it1) }
         }
-        holder.bind(mainInfo)
+        mainInfo?.let { holder.bind(it) }
     }
+
+    override fun getItemCount(): Int = currentList?.size ?: 0
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) R.layout.news_list_item_first

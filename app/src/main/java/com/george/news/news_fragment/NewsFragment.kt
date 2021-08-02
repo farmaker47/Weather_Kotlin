@@ -20,6 +20,7 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: NewsFragmentBinding
     private val newsViewModel: NewsViewModel by viewModels()
+    private lateinit var postAdapter:NewsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,9 +32,24 @@ class NewsFragment : Fragment() {
 
         binding.viewModel = newsViewModel
 
+        postAdapter = NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
+
+            findNavController().navigate(
+                NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(
+                    it.title,
+                    it.content,
+                    it.urlToImage
+                )
+            )
+        })
+
+        binding.newsRecyclerView.apply {
+            adapter = postAdapter
+        }
+
         //Passing listener and viewmodel to adapter
         //binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.weatherRecyclerView.adapter =
+        /*binding.newsRecyclerView.adapter =
             NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
 
                 findNavController().navigate(
@@ -43,7 +59,7 @@ class NewsFragment : Fragment() {
                         it.urlToImage
                     )
                 )
-            })
+            })*/
 
         observeViewModel()
 
@@ -51,8 +67,12 @@ class NewsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        newsViewModel.weatherData.observe(requireActivity(), {
+        /*newsViewModel.newsData.observe(requireActivity(), {
             it.data?.articles?.get(0)?.let { it1 -> Log.v("RESULT", it1.description) }
+        })*/
+
+        newsViewModel.postListNews?.observe(requireActivity(),{
+            postAdapter.submitList(it)
         })
     }
 

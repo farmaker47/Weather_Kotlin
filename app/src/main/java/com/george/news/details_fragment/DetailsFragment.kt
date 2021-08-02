@@ -31,11 +31,12 @@ class DetailsFragment : Fragment() {
     ): View {
         binding = DetailsFragmentBinding.inflate(inflater, container, false)
 
-        Log.i("Details", args.title)
+        Log.i("Details", args.title ?: "")
 
         binding.titleTextView.text = args.title
         binding.contentTextView.text = args.content
-        Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image).centerCrop().into(binding.imageView)
+        Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image)
+            .centerCrop().into(binding.imageView)
 
 
         return binding.root

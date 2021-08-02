@@ -8,10 +8,8 @@
     <fragment
         android:id="@+id/NewsFragment"
         android:name="com.george.news.news_fragment.NewsFragment"
-        android:label="@string/weather_fragment_label"
+        android:label="@string/news_fragment_label"
         tools:layout="@layout/news_fragment">
-        <!--<argument android:name="coordinates"
-            app:argType="com.george.weather_kotlin.CoordinatesAndAddress"/>-->
         <action
             android:id="@+id/action_NewsFragment_to_detailsFragment2"
             app:destination="@id/detailsFragment2" />
@@ -24,12 +22,15 @@
         tools:layout="@layout/details_fragment">
         <argument
             android:name="title"
+            app:nullable="true"
             app:argType="string" />
         <argument
             android:name="content"
+            app:nullable="true"
             app:argType="string" />
         <argument
             android:name="imageURL"
+            app:nullable="true"
             app:argType="string" />
     </fragment>
 </navigation>

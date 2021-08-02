@@ -1,2 +1,2 @@
-rootProject.name='Weather_Kotlin'
+rootProject.name='News_Kotlin'
 include ':app'
