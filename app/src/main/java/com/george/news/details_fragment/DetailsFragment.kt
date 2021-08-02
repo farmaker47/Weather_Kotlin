@@ -8,10 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.databinding.DetailsFragmentBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DetailsFragment : Fragment() {
 
@@ -37,6 +41,17 @@ class DetailsFragment : Fragment() {
         binding.contentTextView.text = args.content
         Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image)
             .centerCrop().into(binding.imageView)
+
+        lifecycleScope.launch {
+            delay(10)
+            binding.toolbar.translate(82)
+            binding.toolbar.translate(823)
+        }
+
+
+        binding.menu.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
 
         return binding.root

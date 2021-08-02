@@ -56,4 +56,8 @@
     <dimen name="list_item_max_temp_text_size">48sp</dimen>
     <dimen name="list_item_min_temp_text_size">32sp</dimen>
 
+    <dimen name="toolbar_elevation">8dp</dimen>
+    <dimen name="toolbar">56dp</dimen>
+    <dimen name="icon_size">48dp</dimen>
+
 </resources>
