@@ -35,13 +35,15 @@ class NewsFragment : Fragment() {
         //binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.weatherRecyclerView.adapter =
             NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
-                //viewModel.displayPropertyDetails(it)
 
-                findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(it.author))
-
-
-
-            }, newsViewModel)
+                findNavController().navigate(
+                    NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(
+                        it.title,
+                        it.content,
+                        it.urlToImage
+                    )
+                )
+            })
 
         observeViewModel()
 

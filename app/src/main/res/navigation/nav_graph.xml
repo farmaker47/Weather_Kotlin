@@ -21,9 +21,15 @@
         android:id="@+id/detailsFragment2"
         android:name="com.george.news.details_fragment.DetailsFragment"
         android:label="details_fragment"
-        tools:layout="@layout/details_fragment" >
+        tools:layout="@layout/details_fragment">
         <argument
-            android:name="article"
-            app:argType="string"/>
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="content"
+            app:argType="string" />
+        <argument
+            android:name="imageURL"
+            app:argType="string" />
     </fragment>
 </navigation>

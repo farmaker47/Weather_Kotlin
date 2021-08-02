@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.databinding.DetailsFragmentBinding
 
@@ -30,7 +31,13 @@ class DetailsFragment : Fragment() {
     ): View {
         binding = DetailsFragmentBinding.inflate(inflater, container, false)
 
-        Log.e("Details", args.article)
+        Log.i("Details", args.title)
+
+        binding.titleTextView.text = args.title
+        binding.contentTextView.text = args.content
+        Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image).centerCrop().into(binding.imageView)
+
+
         return binding.root
     }
 

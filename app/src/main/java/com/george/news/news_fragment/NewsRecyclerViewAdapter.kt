@@ -37,7 +37,6 @@ import com.george.news.network.Articles
  */
 class NewsRecyclerViewAdapter(
     val onClickListener: OnClickListener,
-    val newsViewModel: NewsViewModel
 ) :
     ListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
     /**
@@ -46,7 +45,7 @@ class NewsRecyclerViewAdapter(
      */
     class NewsRecyclerViewHolder(private var binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(mainInfo: Articles, newsViewModel: NewsViewModel) {
+        fun bind(mainInfo: Articles) {
             //binding.mainInfo = mainInfo
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -107,7 +106,7 @@ class NewsRecyclerViewAdapter(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(mainInfo)
         }
-        holder.bind(mainInfo, newsViewModel)
+        holder.bind(mainInfo)
     }
 
     override fun getItemViewType(position: Int): Int {
