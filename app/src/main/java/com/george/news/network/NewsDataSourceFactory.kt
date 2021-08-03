@@ -1,7 +1,6 @@
 package com.george.news.network
 
 import androidx.paging.DataSource
-import com.george.news.di.NetworkRepository
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

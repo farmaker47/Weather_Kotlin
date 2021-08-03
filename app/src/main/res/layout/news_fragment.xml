@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary"
         tools:context=".news_fragment.NewsActivity">
 
-        <com.george.news.widget.FortnightlyToolbar
+        <com.george.news.widget.NewsToolbar
             android:id="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,12 +91,38 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/vd_search"
-                app:tint="@color/fortnightly_purple"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />-->
 
-        </com.george.news.widget.FortnightlyToolbar>
+        </com.george.news.widget.NewsToolbar>
+
+        <ProgressBar
+            android:id="@+id/status_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:visibility="visible"
+            android:indeterminateTint="@color/progressBarColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="24sp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/error_message"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="An error occured. Please try again."/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/news_recycler_view"
@@ -111,14 +137,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/news_list_item" />
 
-        <ImageView
-            android:id="@+id/status_image"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

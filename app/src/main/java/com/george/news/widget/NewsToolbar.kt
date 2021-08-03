@@ -13,14 +13,15 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kotlin.math.abs
 import kotlin.properties.Delegates
 
-class FortnightlyToolbar(
+class NewsToolbar(
     context: Context,
     attrs: AttributeSet
 ) : ConstraintLayout(context, attrs) {
 
     private val interpolator = AccelerateInterpolator(5f)
     // try different values here https://cubic-bezier.com/#0,.99,1,.67
-    private val cubicInterpolator = CubicBezierInterpolator(0f, .99f, 1f, .67f)
+    private val cubicInterpolator =
+        NewsInterpolator(0f, .99f, 1f, .67f)
 
     //private val searchView by lazyFast { findViewById<View>(R.id.search) }
 

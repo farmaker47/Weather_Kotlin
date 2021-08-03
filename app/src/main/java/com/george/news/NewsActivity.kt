@@ -17,11 +17,6 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-
-        //Delete navGraph from xml and set here
-        // Details: https://developer.android.com/guide/navigation/navigation-pass-data#start
-        findNavController(R.id.nav_host_fragment).setGraph(R.navigation.nav_graph)
-
     }
 
 }

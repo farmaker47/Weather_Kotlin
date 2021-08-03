@@ -10,4 +10,5 @@
     <color name="secondary_text">#727272</color>
 
     <color name="activated">#E0E0E0</color>
+    <color name="progressBarColor">#000000</color>
 </resources>

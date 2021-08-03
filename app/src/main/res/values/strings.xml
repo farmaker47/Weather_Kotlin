@@ -1,7 +1,5 @@
 <resources>
-Ψηενγεδ το     <string name="app_name">News_Kotlin</string>
-    <string name="title_activity_maps">Map</string>
-
+    <string name="app_name">News_Kotlin</string>
     <string name="automaticLocation">Automatic Location</string>
     <string name="automaticLocationMessage">Do you allow this application to find your location automatically?</string>
     <string name="epilogiYes">Yes</string>
@@ -22,6 +20,7 @@
     <string name="hello_first_fragment">Hello news fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="news_fragment_label">News Fragment</string>
+    <string name="error_message">An error occured. Please try again.</string>
 
 </resources>
 

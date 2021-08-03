@@ -19,7 +19,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.george.news.widget.FortnightlyToolbar
+        <com.george.news.widget.NewsToolbar
             android:id="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -101,7 +101,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />-->
 
-        </com.george.news.widget.FortnightlyToolbar>
+        </com.george.news.widget.NewsToolbar>
 
         <TextView
             android:id="@+id/titleTextView"

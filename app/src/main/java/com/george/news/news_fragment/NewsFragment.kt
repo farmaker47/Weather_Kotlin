@@ -1,15 +1,22 @@
 package com.george.news.news_fragment
 
+import android.content.Context
+import android.net.*
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.george.news.databinding.NewsFragmentBinding
+import com.george.news.network.NewsDataSource
 import dagger.hilt.android.AndroidEntryPoint
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -19,7 +26,7 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: NewsFragmentBinding
     private val newsViewModel: NewsViewModel by viewModels()
-    private lateinit var postAdapter:NewsRecyclerViewAdapter
+    private lateinit var postAdapter: NewsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +38,7 @@ class NewsFragment : Fragment() {
 
         binding.viewModel = newsViewModel
 
+        // Init postAdapter
         postAdapter = NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
 
             findNavController().navigate(
@@ -46,11 +54,10 @@ class NewsFragment : Fragment() {
             adapter = postAdapter
         }
 
-        //Passing listener and viewmodel to adapter
-        //binding.weatherRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        // Passing listener and viewmodel to adapter
+        // when PageList is not used
         /*binding.newsRecyclerView.adapter =
             NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
-
                 findNavController().navigate(
                     NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(
                         it.title,
@@ -60,18 +67,45 @@ class NewsFragment : Fragment() {
                 )
             })*/
 
+
         observeViewModel()
+
+        // Check for internet connection and through a Toast on unavailability
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        if(!isConnected){
+            Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
+        }
 
         return binding.root
     }
 
+    /**
+     * Function to observe [LiveData]
+     */
     private fun observeViewModel() {
-        /*newsViewModel.newsData.observe(requireActivity(), {
-            it.data?.articles?.get(0)?.let { it1 -> Log.v("RESULT", it1.description) }
-        })*/
-
-        newsViewModel.postListNews?.observe(requireActivity(),{
+        // Observe postListNews
+        newsViewModel.postListNews?.observe(requireActivity(), {
             postAdapter.submitList(it)
+        })
+
+        // Observe listSize to handle errorTextView's and progressBar's visibility
+        NewsDataSource.listSize.observe(requireActivity(), { size ->
+            when {
+                size == 0 -> {
+                    binding.errorTextView.visibility = View.VISIBLE
+                    binding.statusImage.visibility = View.GONE
+                }
+                size >= 1 -> {
+                    binding.statusImage.visibility = View.GONE
+                    binding.errorTextView.visibility = View.GONE
+                }
+                size == -1 -> {
+                    binding.statusImage.visibility = View.VISIBLE
+                    binding.errorTextView.visibility = View.GONE
+                }
+            }
         })
     }
 
@@ -86,9 +120,42 @@ class NewsFragment : Fragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        NewsDataSource.listSize = MutableLiveData(-1)
+    }
+
     private val listener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             binding.toolbar.translate(dy)
         }
     }
+
+    /*private fun registerTrackInternetCallback() {
+
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val request = NetworkRequest.Builder()
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .build()
+        val mMobileNetworkCallback = object : NetworkCallback() {
+
+            *//*override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+
+                Toast.makeText(requireActivity(),"Network available",Toast.LENGTH_LONG).show()
+
+            }*//*
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
+            }
+
+            override fun onUnavailable() {
+                super.onUnavailable()
+                Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
+            }
+        }
+        cm.registerNetworkCallback(request, mMobileNetworkCallback)
+    }*/
 }

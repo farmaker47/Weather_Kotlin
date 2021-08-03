@@ -30,7 +30,7 @@ import com.george.news.R
 import com.george.news.network.Articles
 
 /**
- * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
+ * This class implements a [RecyclerView] [PagedListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  * @param onClick a lambda that takes the
  */
@@ -40,7 +40,9 @@ class NewsRecyclerViewAdapter(
     PagedListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
     /**
      * The NewsRecyclerViewHolder constructor takes the binding variable from the associated
-     * ForecastListItem, which nicely gives it access to the full [MainInfo] information.
+     * ListItem, which nicely gives it access to the full [Articles] information.
+     *
+     * Here we use [ViewDataBinding] as we have multiple [ViewType]
      */
     class NewsRecyclerViewHolder(private var binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -51,6 +53,7 @@ class NewsRecyclerViewAdapter(
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
 
+            // In case you do not want to use databinding use below
             /*val textView = itemView.findViewById<TextView>(R.id.news_text)
             val imageView = itemView.findViewById<ImageView>(R.id.news_icon)
             textView.text = mainInfo.title
@@ -59,7 +62,7 @@ class NewsRecyclerViewAdapter(
     }
 
     /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of [MainInfo]
+     * Allows the RecyclerView to determine which items have changed when the [List] of [Articles]
      * has been updated.
      */
     companion object DiffCallback : DiffUtil.ItemCallback<Articles>() {
@@ -74,6 +77,7 @@ class NewsRecyclerViewAdapter(
 
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
+     * Used [ViewDataBinding] as we have multiple [ViewType]
      */
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -83,19 +87,7 @@ class NewsRecyclerViewAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
         return NewsRecyclerViewHolder(binding)
-
-        /*return if(viewType == R.layout.news_list_item_first){
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
-            NewsRecyclerViewHolder(binding)
-        }else{
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, viewType, parent, false)
-            NewsRecyclerViewHolder(binding)
-        }*/
-
     }
-
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
@@ -116,9 +108,9 @@ class NewsRecyclerViewAdapter(
     }
 
     /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [MarsProperty]
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Articles]
      * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [MarsProperty]
+     * @param clickListener lambda that will be called with the current [Articles]
      */
     class OnClickListener(val clickListener: (mainInfo: Articles) -> Unit) {
         fun onClick(mainInfo: Articles) = clickListener(mainInfo)

@@ -23,8 +23,6 @@ class DetailsFragment : Fragment() {
         fun newInstance() = DetailsFragment()
     }
 
-    private lateinit var viewModel: DetailsViewModel
-
     private val args: DetailsFragmentArgs by navArgs()
 
     private lateinit var binding: DetailsFragmentBinding
@@ -35,32 +33,25 @@ class DetailsFragment : Fragment() {
     ): View {
         binding = DetailsFragmentBinding.inflate(inflater, container, false)
 
-        Log.i("Details", args.title ?: "")
-
+        // Set title, content and image
         binding.titleTextView.text = args.title
         binding.contentTextView.text = args.content
         Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image)
             .centerCrop().into(binding.imageView)
 
+        // Use same toolbar with NewsFragment but make it shrink
         lifecycleScope.launch {
             delay(10)
             binding.toolbar.translate(82)
             binding.toolbar.translate(823)
         }
 
-
+        // Navigate up by clicking back button
         binding.menu.setOnClickListener {
             findNavController().navigateUp()
         }
 
-
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

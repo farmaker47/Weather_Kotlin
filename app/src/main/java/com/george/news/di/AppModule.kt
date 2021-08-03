@@ -12,7 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
+/**
+ * Hilt App module that provides OkHttpClient, Retrofit and NetworkApi
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {

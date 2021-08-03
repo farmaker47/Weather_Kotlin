@@ -26,7 +26,7 @@ import com.george.news.network.Articles
 import com.george.news.news_fragment.NewsRecyclerViewAdapter
 
 /**
- * When there is no MainInfo data (data is null), hide the [RecyclerView], otherwise show it.
+ * When PageList is not used
  */
 /*@BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Articles>?) {
@@ -34,32 +34,10 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Articles>?) {
     adapter.submitList(data)
 }*/
 
+/**
+ *  Use Glide to load the image to the ImageView
+ */
 @BindingAdapter("articleImage")
 fun bindImageView(imageView: ImageView, string: String?) {
     Glide.with(imageView.context).load(string).placeholder(R.drawable.ic_broken_image).centerCrop().into(imageView)
 }
-
-
-/*@BindingAdapter("weatherApiStatus")
-fun bindStatus(statusImageView: ImageView, status: WeatherApiStatus?) {
-    when (status) {
-        WeatherApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-            //Glide.with(statusImageView.context).load(R.drawable.loading_animation).into(statusImageView)
-        }
-        WeatherApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        WeatherApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
-}*/
-
-/*@BindingAdapter("subStringValue")
-fun bindSubString(dateTextView: TextView, string: String?) {
-    val substr: String = string!!.substring(5)
-    dateTextView.text = substr
-}*/

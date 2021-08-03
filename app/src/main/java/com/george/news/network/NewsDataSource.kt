@@ -2,7 +2,6 @@ package com.george.news.network
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.george.news.di.NetworkRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,12 +33,20 @@ class NewsDataSource @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.articles.let { it?.let { it1 -> callback.onResult(it1, null, 1) } }
                     response.body()?.articles?.count()?.let { closure?.invoke(it) }
+                    listSize.postValue(response.body()?.articles?.count())
                 }
 
             }.onFailure {
                 closure?.invoke(0)
+                listSize.postValue(0)
             }
         }
+    }
+
+    companion object {
+
+        // Value to observe in NewsFragment
+        var listSize: MutableLiveData<Int> = MutableLiveData(-1)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Articles>) {

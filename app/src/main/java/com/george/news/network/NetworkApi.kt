@@ -6,7 +6,10 @@ import retrofit2.http.Query
 
 interface NetworkApi {
 
-    // Get news
+    /**
+     * Get the top headlines from NewsApi
+     * https://newsapi.org/
+     */
     @GET("/v2/top-headlines")
     suspend fun getNews(
         @Query("country") country: String?,
