@@ -12,28 +12,66 @@
         android:layout_height="match_parent"
         tools:context=".details_fragment.DetailsFragment">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/image_display" />
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/italic"
+                    android:gravity="start"
+                    android:padding="16dp"
+                    android:text="Hello"
+                    android:textColor="#000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
+
+                <TextView
+                    android:id="@+id/contentTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/merriweather"
+                    android:gravity="start"
+                    android:padding="16dp"
+                    android:text="Hi"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <com.george.news.widget.NewsToolbar
             android:id="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar"
-            android:elevation="0dp">
+            android:elevation="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/menu"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_arrow_back_black_24dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +79,11 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/header1"
                 style="@style/HeaderStyle"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text=" "
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/menu"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:visibility="gone"
                 android:text="N"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/header1"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -68,8 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:visibility="gone"
                 android:text="ews"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/header2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -102,30 +140,6 @@
                 app:layout_constraintTop_toTopOf="parent" />-->
 
         </com.george.news.widget.NewsToolbar>
-
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:padding="16dp"
-            android:text="Hello"
-            android:fontFamily="@font/italic"
-            android:textColor="#000"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
-
-        <TextView
-            android:id="@+id/contentTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:fontFamily="@font/merriweather"
-            android:padding="16dp"
-            android:text="Hi"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,8 +12,8 @@ class NewsDataSource @Inject constructor(
     private val networkRepository: NetworkRepository,
     private val coroutineScope: CoroutineScope,
     private val country: String,
-    private val category:String,
-    private val apiKey:String,
+    private val category: String,
+    private val apiKey: String,
     val closure: ((Int) -> Unit)? = null
 ) : PageKeyedDataSource<Int, Articles>() {
 
@@ -27,11 +27,20 @@ class NewsDataSource @Inject constructor(
                     networkRepository.getNews(
                         country,
                         category,
-                        apiKey)
+                        apiKey
+                    )
                 }
             }.onSuccess { response ->
                 if (response.isSuccessful) {
-                    response.body()?.articles.let { it?.let { it1 -> callback.onResult(it1, null, 1) } }
+                    response.body()?.articles.let {
+                        it?.let { it1 ->
+                            callback.onResult(
+                                it1,
+                                null,
+                                1
+                            )
+                        }
+                    }
                     response.body()?.articles?.count()?.let { closure?.invoke(it) }
                     listSize.postValue(response.body()?.articles?.count())
                 }
@@ -49,11 +58,8 @@ class NewsDataSource @Inject constructor(
         var listSize: MutableLiveData<Int> = MutableLiveData(-1)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Articles>) {
+    // Implement below if you have more than one page
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Articles>) {}
 
-    }
-
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Articles>) {
-
-    }
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Articles>) {}
 }

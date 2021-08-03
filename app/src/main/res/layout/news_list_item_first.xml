@@ -43,7 +43,7 @@
             <ImageView
                 android:id="@+id/news_icon"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="280dp"
                 app:articleImage="@{mainInfo.urlToImage}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_gravity="bottom"
             android:background="#ccc" />
 
