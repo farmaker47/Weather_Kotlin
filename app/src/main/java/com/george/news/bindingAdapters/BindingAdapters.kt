@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, The Android Open Source Project
+ * Copyright 2021, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,6 @@ import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.network.Articles
 import com.george.news.news_fragment.NewsRecyclerViewAdapter
-
-/**
- * When PageList is not used
- */
-/*@BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Articles>?) {
-    val adapter = recyclerView.adapter as NewsRecyclerViewAdapter
-    adapter.submitList(data)
-}*/
 
 /**
  *  Use Glide to load the image to the ImageView

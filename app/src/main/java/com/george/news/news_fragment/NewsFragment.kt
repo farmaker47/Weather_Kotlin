@@ -54,20 +54,6 @@ class NewsFragment : Fragment() {
             adapter = postAdapter
         }
 
-        // Passing listener and viewmodel to adapter
-        // when PageList is not used
-        /*binding.newsRecyclerView.adapter =
-            NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
-                findNavController().navigate(
-                    NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(
-                        it.title,
-                        it.content,
-                        it.urlToImage
-                    )
-                )
-            })*/
-
-
         observeViewModel()
 
         // Check for internet connection and through a Toast on unavailability
@@ -130,32 +116,4 @@ class NewsFragment : Fragment() {
             binding.toolbar.translate(dy)
         }
     }
-
-    /*private fun registerTrackInternetCallback() {
-
-        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val request = NetworkRequest.Builder()
-            .addCapability(NET_CAPABILITY_INTERNET)
-            .build()
-        val mMobileNetworkCallback = object : NetworkCallback() {
-
-            *//*override fun onAvailable(network: Network) {
-                super.onAvailable(network)
-
-                Toast.makeText(requireActivity(),"Network available",Toast.LENGTH_LONG).show()
-
-            }*//*
-
-            override fun onLost(network: Network) {
-                super.onLost(network)
-                Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
-            }
-
-            override fun onUnavailable() {
-                super.onUnavailable()
-                Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
-            }
-        }
-        cm.registerNetworkCallback(request, mMobileNetworkCallback)
-    }*/
 }
