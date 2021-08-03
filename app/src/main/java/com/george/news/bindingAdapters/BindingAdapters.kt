@@ -18,17 +18,40 @@
 package com.george.news.bindingAdapters
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.george.news.R
 import com.george.news.network.Articles
 import com.george.news.news_fragment.NewsRecyclerViewAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  *  Use Glide to load the image to the ImageView
  */
 @BindingAdapter("articleImage")
 fun bindImageView(imageView: ImageView, string: String?) {
-    Glide.with(imageView.context).load(string).placeholder(R.drawable.ic_broken_image).centerCrop().into(imageView)
+    Glide.with(imageView.context).load(string).placeholder(R.drawable.ic_broken_image).centerCrop()
+        .into(imageView)
+}
+
+@BindingAdapter("convertToHour")
+fun bindTextView(textView: TextView, string: String?) {
+
+    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+    format.timeZone = TimeZone.getTimeZone("UTC")
+    val date = format.parse(string)
+    val millis = date.time
+    val d = Date(System.currentTimeMillis() - millis)
+    val sdf = SimpleDateFormat("HH", Locale.getDefault())
+    val dateStr: String = sdf.format(d)
+
+    if (dateStr.take(1) == "0") {
+        textView.text = dateStr.substring(1) + textView.context.getString(R.string.hour_char)
+    } else {
+        textView.text = dateStr + textView.context.getString(R.string.hour_char)
+    }
+
 }
