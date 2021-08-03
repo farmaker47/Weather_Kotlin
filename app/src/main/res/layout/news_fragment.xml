@@ -81,7 +81,6 @@
                 android:textColor="?android:textColorPrimary"
                 android:textSize="28sp"
                 android:visibility="invisible"
-                app:fontFamily="@font/old_london"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/menu"
                 app:layout_constraintTop_toTopOf="parent" />

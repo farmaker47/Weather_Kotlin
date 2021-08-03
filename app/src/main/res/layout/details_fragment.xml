@@ -33,12 +33,12 @@
                     android:id="@+id/titleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/italic"
+                    android:fontFamily="@font/merriweather_bold"
                     android:gravity="start"
                     android:padding="16dp"
                     android:text="Hello"
                     android:textColor="#000"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/imageView" />
 
@@ -46,11 +46,11 @@
                     android:id="@+id/contentTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/merriweather"
+                    android:fontFamily="@font/merriweather_regular"
                     android:gravity="start"
                     android:padding="16dp"
                     android:text="Hi"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
 
