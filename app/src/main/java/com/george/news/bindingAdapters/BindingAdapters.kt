@@ -37,6 +37,9 @@ fun bindImageView(imageView: ImageView, string: String?) {
         .into(imageView)
 }
 
+/**
+ * Convert publishedAtTime to milliseconds and then to hour
+ */
 @BindingAdapter("convertToHour")
 fun bindTextView(textView: TextView, string: String?) {
 

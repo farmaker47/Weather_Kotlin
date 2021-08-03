@@ -39,11 +39,10 @@ class DetailsFragment : Fragment() {
         Glide.with(requireActivity()).load(args.imageURL).placeholder(R.drawable.ic_broken_image)
             .centerCrop().into(binding.imageView)
 
-        // Use same toolbar with NewsFragment but make it shrink
+        // Use same toolbar with NewsFragment but shrink it
         lifecycleScope.launch {
             delay(10)
-            binding.toolbar.translate(82)
-            binding.toolbar.translate(823)
+            binding.toolbar.translate(800)
         }
 
         // Navigate up by clicking back button

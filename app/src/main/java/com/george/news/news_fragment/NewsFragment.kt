@@ -11,11 +11,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.george.news.databinding.NewsFragmentBinding
 import com.george.news.network.NewsDataSource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -32,12 +36,14 @@ class NewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = NewsFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         binding.viewModel = newsViewModel
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Init postAdapter
         postAdapter = NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
 
@@ -63,8 +69,6 @@ class NewsFragment : Fragment() {
         if(!isConnected){
             Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
         }
-
-        return binding.root
     }
 
     /**
@@ -99,11 +103,12 @@ class NewsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.newsRecyclerView.addOnScrollListener(listener)
+        binding.newsRecyclerView.scrollToPosition(0)
     }
 
     override fun onPause() {
         super.onPause()
-
+        binding.newsRecyclerView.removeOnScrollListener(listener)
     }
 
     override fun onDestroyView() {
