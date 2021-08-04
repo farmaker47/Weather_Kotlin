@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "totalResults": 70,
+  "articles": [
+    {
+      "source": {
+        "id": null,
+        "name": "CNBC"
+      },
+      "author": "Kevin Stankiewicz",
+      "title": "Charts suggest the stock market is getting close to a near-term top, Cramer says - CNBC",
+      "description": "\"The charts, as interpreted by the legendary Tom DeMark, suggest that the market's getting close to a top, especially the S&P 500 and the Nasdaq 100,\" Jim Cramer said.",
+      "url": "https://www.cnbc.com/2021/08/03/charts-suggest-the-stock-market-is-getting-close-to-a-near-term-top-cramer-says-.html",
+      "urlToImage": "https://image.cnbcfm.com/api/v1/image/105867570-1556056698379img_0360r.jpg?v=1556056746",
+      "publishedAt": "2021-08-04T00:30:00Z",
+      "content": "CNBC's Jim Cramer said Tuesday technical analysis indicates the stock market may be approaching a near-term peak. \r\n\"The charts, as interpreted by the legendary Tom DeMark, suggest that the market's … [+2236 chars]"
+    }
+  ]
+}

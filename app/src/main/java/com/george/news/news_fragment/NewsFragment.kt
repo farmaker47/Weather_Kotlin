@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -103,7 +104,7 @@ class NewsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.newsRecyclerView.addOnScrollListener(listener)
-        binding.newsRecyclerView.scrollToPosition(0)
+        //binding.newsRecyclerView.scrollToPosition(0)
     }
 
     override fun onPause() {
@@ -118,7 +119,34 @@ class NewsFragment : Fragment() {
 
     private val listener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            binding.toolbar.translate(dy)
+            //Log.e("POSITION_0", dy.toString())
+
+            // Uncomment to see the toolbar effect on first screen
+            // binding.toolbar.translate(dy)
+
+
+            /*val linearLayoutManager = binding.newsRecyclerView.layoutManager as LinearLayoutManager
+            val firstVisiblePosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition()*/
+            //Log.e("POSITION", firstVisiblePosition.toString())
+            /*if(firstVisiblePosition == 0 || firstVisiblePosition == -1){
+                lifecycleScope.launch {
+                    delay(10)
+                    binding.toolbar.translate(-800)
+                }
+            }else{
+                lifecycleScope.launch {
+                    delay(10)
+                    binding.toolbar.translate(100)
+                }
+            }*/
+
+            /*if(dy>0){
+                binding.toolbar.translate(100)
+            }else{
+                binding.toolbar.translate(-800)
+            }*/
+
+            //binding.toolbar.translate(dy)
         }
     }
 }
