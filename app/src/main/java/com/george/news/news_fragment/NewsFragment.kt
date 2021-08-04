@@ -3,25 +3,18 @@ package com.george.news.news_fragment
 import android.content.Context
 import android.net.*
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.george.news.databinding.NewsFragmentBinding
 import com.george.news.network.NewsDataSource
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -48,7 +41,6 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // Init postAdapter
         postAdapter = NewsRecyclerViewAdapter(NewsRecyclerViewAdapter.OnClickListener {
-
             findNavController().navigate(
                 NewsFragmentDirections.actionNewsFragmentToDetailsFragment2(
                     it.title,
@@ -58,13 +50,15 @@ class NewsFragment : Fragment() {
             )
         })
 
+        // Set the adapter
         binding.newsRecyclerView.apply {
             adapter = postAdapter
         }
 
+        // Observe live LiveData
         observeViewModel()
 
-        // Check for internet connection and through a Toast on unavailability
+        // Check for internet connection and throw a Toast on unavailability
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         isConnected = activeNetwork?.isConnectedOrConnecting == true

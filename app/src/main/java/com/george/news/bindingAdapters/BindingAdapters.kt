@@ -21,11 +21,8 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.george.news.R
-import com.george.news.network.Articles
-import com.george.news.news_fragment.NewsRecyclerViewAdapter
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,6 +50,7 @@ fun bindTextView(textView: TextView, string: String?) {
         val sdf = SimpleDateFormat("HH", Locale.getDefault())
         val dateStr: String = sdf.format(d)
 
+        // Take second digit or both
         if (dateStr.take(1) == "0") {
             textView.text = dateStr.substring(1) + textView.context.getString(R.string.hour_char)
         } else {

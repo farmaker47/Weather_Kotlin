@@ -54,5 +54,3 @@ enum class Status {
     ERROR,
     LOADING
 }
-
-enum class NewsApiStatus { LOADING, ERROR, DONE }

@@ -1,7 +1,5 @@
 package com.george.news.network
 
-import com.george.news.network.NetworkApi
-import com.george.news.network.NewsResponse
 import retrofit2.Response
 import javax.inject.Inject
 

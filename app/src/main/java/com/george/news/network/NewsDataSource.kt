@@ -53,7 +53,6 @@ class NewsDataSource @Inject constructor(
     }
 
     companion object {
-
         // Value to observe in NewsFragment
         var listSize: MutableLiveData<Int> = MutableLiveData(-1)
     }

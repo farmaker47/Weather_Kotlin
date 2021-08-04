@@ -2,9 +2,7 @@ package com.george.news
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class NewsActivity : AppCompatActivity() {

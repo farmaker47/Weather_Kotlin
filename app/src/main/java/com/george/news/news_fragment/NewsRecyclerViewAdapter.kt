@@ -24,7 +24,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.george.news.R
 import com.george.news.network.Articles
@@ -32,7 +31,7 @@ import com.george.news.network.Articles
 /**
  * This class implements a [RecyclerView] [PagedListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
- * @param onClick a lambda that takes the
+ * @param onClick a lambda that takes and passes [Articles]
  */
 class NewsRecyclerViewAdapter(
     val onClickListener: OnClickListener,
@@ -40,7 +39,7 @@ class NewsRecyclerViewAdapter(
     PagedListAdapter<Articles, NewsRecyclerViewAdapter.NewsRecyclerViewHolder>(DiffCallback) {
     /**
      * The NewsRecyclerViewHolder constructor takes the binding variable from the associated
-     * ListItem, which nicely gives it access to the full [Articles] information.
+     * ListItem, which gives it access to the full [Articles] information.
      *
      * Here we use [ViewDataBinding] as we have multiple [ViewType]
      */
@@ -103,6 +102,7 @@ class NewsRecyclerViewAdapter(
     override fun getItemCount(): Int = currentList?.size ?: 0
 
     override fun getItemViewType(position: Int): Int {
+        // For first item show different layout than rest positions
         return if (position == 0) R.layout.news_list_item_first
         else R.layout.news_list_item
     }
