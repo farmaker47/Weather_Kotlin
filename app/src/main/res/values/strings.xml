@@ -14,7 +14,7 @@
     <string name="hello_first_fragment">Hello news fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="news_fragment_label">News Fragment</string>
-    <string name="error_message">An error occurred. Please try again.</string>
+    <string name="error_message">It seems that there is no internet connection. Please try again!</string>
     <string name="image_display">Image Display</string>
     <string name="hour_char">H</string>
 

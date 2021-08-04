@@ -1,12 +1,11 @@
 package com.george.news.news_fragment
 
-import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +24,8 @@ class NewsFragment : Fragment() {
     private lateinit var binding: NewsFragmentBinding
     private val newsViewModel: NewsViewModel by viewModels()
     private lateinit var postAdapter: NewsRecyclerViewAdapter
-    private var isConnected:Boolean = true
+    private var isConnected: Boolean = true
+    private lateinit var cm: ConnectivityManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,16 +55,14 @@ class NewsFragment : Fragment() {
             adapter = postAdapter
         }
 
-        // Observe live LiveData
+        // Observe LiveData
         observeViewModel()
 
-        // Check for internet connection and throw a Toast on unavailability
-        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        // Check for internet connection
+        cm = context?.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         isConnected = activeNetwork?.isConnectedOrConnecting == true
-        if(!isConnected){
-            Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
-        }
+
     }
 
     /**
@@ -99,7 +97,6 @@ class NewsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.newsRecyclerView.addOnScrollListener(listener)
-        //binding.newsRecyclerView.scrollToPosition(0)
     }
 
     override fun onPause() {
@@ -110,9 +107,9 @@ class NewsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         // On destroy set list size to this value
-        if(isConnected){
+        if (isConnected) {
             NewsDataSource.listSize = MutableLiveData(-1)
-        }else{
+        } else {
             NewsDataSource.listSize = MutableLiveData(0)
         }
 
@@ -120,7 +117,6 @@ class NewsFragment : Fragment() {
 
     private val listener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            //Log.e("POSITION_0", dy.toString())
 
             // Uncomment to see the toolbar effect on first screen
             // binding.toolbar.translate(dy)
