@@ -32,6 +32,7 @@ class NewsFragment : Fragment() {
     private lateinit var binding: NewsFragmentBinding
     private val newsViewModel: NewsViewModel by viewModels()
     private lateinit var postAdapter: NewsRecyclerViewAdapter
+    private var isConnected:Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +67,7 @@ class NewsFragment : Fragment() {
         // Check for internet connection and through a Toast on unavailability
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        isConnected = activeNetwork?.isConnectedOrConnecting == true
         if(!isConnected){
             Toast.makeText(requireActivity(),"Network unavailable",Toast.LENGTH_LONG).show()
         }
@@ -114,7 +115,13 @@ class NewsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        NewsDataSource.listSize = MutableLiveData(-1)
+        // On destroy set list size to this value
+        if(isConnected){
+            NewsDataSource.listSize = MutableLiveData(-1)
+        }else{
+            NewsDataSource.listSize = MutableLiveData(0)
+        }
+
     }
 
     private val listener = object : RecyclerView.OnScrollListener() {
