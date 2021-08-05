@@ -6,6 +6,7 @@
 - Retrofit
 - Glide
 - Paging 2
+- Hamcrest
 
 ## Architecture
 - MVVM
