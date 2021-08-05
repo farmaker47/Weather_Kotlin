@@ -1,6 +1,6 @@
 # News application based on `https://newsapi.org/`
 
-## Libraries included in this android project
+## Libraries included in this Kotlin android project
 - Hilt
 - Navigation 
 - Retrofit
