@@ -121,29 +121,6 @@ class NewsFragment : Fragment() {
             // Uncomment to see the toolbar effect on first screen
             // binding.toolbar.translate(dy)
 
-
-            /*val linearLayoutManager = binding.newsRecyclerView.layoutManager as LinearLayoutManager
-            val firstVisiblePosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition()*/
-            //Log.e("POSITION", firstVisiblePosition.toString())
-            /*if(firstVisiblePosition == 0 || firstVisiblePosition == -1){
-                lifecycleScope.launch {
-                    delay(10)
-                    binding.toolbar.translate(-800)
-                }
-            }else{
-                lifecycleScope.launch {
-                    delay(10)
-                    binding.toolbar.translate(100)
-                }
-            }*/
-
-            /*if(dy>0){
-                binding.toolbar.translate(100)
-            }else{
-                binding.toolbar.translate(-800)
-            }*/
-
-            //binding.toolbar.translate(dy)
         }
     }
 }
