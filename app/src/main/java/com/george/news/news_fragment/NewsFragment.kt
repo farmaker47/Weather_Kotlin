@@ -2,16 +2,20 @@ package com.george.news.news_fragment
 
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.*
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.george.news.databinding.NewsFragmentBinding
+import com.george.news.network.NetworkMethods
 import com.george.news.network.NewsDataSource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +29,6 @@ class NewsFragment : Fragment() {
     private val newsViewModel: NewsViewModel by viewModels()
     private lateinit var postAdapter: NewsRecyclerViewAdapter
     private var isConnected: Boolean = true
-    private lateinit var cm: ConnectivityManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +40,7 @@ class NewsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Init postAdapter
@@ -59,9 +63,7 @@ class NewsFragment : Fragment() {
         observeViewModel()
 
         // Check for internet connection
-        cm = context?.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        isConnected = activeNetwork?.isConnectedOrConnecting == true
+        isConnected = NetworkMethods.isInternetAvailable(requireActivity())
 
     }
 
